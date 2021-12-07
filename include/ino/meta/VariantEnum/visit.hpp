@@ -49,26 +49,30 @@ namespace variant_enum {
     >;
 
     void on_character(const Characters f) {
-        std::cout << "Current Value is: Characters" << std::endl;
+        std::puts("Current Value is: Characters");
     }
 
     int main()
     {
         const VarEnum var(Characters::Morpheus);
 
-        ino::meta::variant_enum::visit(var,
+        const bool defined = ino::meta::variant_enum::visit(
+            var,
             [&](Fruits f) { // Lambda with capture as arg
-                std::cout << "Current value is: Fruits" << std::endl;
+                std::puts("Current value is: Fruits");
             },
             [](const Colors f) { // Lambda without capture as arg
-                std::cout << "Current value is Colors" << std::endl;
+                std::puts("Current value is Colors");
             },
             on_character // Common function as arg
         );
 
+        if(!defined) {
+            std::puts("Current value is 'Undefined'");
+        }
+
         return 0;
     }
-
     @endcode
  */
 
@@ -341,13 +345,10 @@ public:
 
         return traverse_callbacks(v_enum, callbacks ...);
 
-
-//        using dummy_t = int[];
-//        (void) dummy_t {
-//            (visit_callback< typename func_info<Funcs>::first_arg_type >(v_enum, funcs), 0)...
-//        };
-
+        // ----------------------------------------------
         /*
+            // Algo idea in imaginary imprative way :)
+        
             for(std::size_t i = 0; i < funcs.size(); ++i)
             {
                 if( VarEnum::is_type_allowed< funcs[i].arg_t >() )
@@ -358,7 +359,6 @@ public:
                         break; // Dont check others
                     }
                 }
-
             }
          */
     }
