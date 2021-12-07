@@ -1,6 +1,6 @@
-# Inobelar's meta-programing library
+# Inobelar's meta-programming library
 
-The set of C++11 utility headers for doing compile-time magic.
+The set of C++11 utility headers for doing compile-time magic
 
 # Examples
 
