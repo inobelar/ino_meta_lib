@@ -90,21 +90,23 @@ struct SimplePacket : View<Args...>
 /**
     # Example of usage
 
+    ## Simple
+
     @code{.cpp}
-    using MPU_9250__DataPacket = simple_packet::Packet<
-              uint8_t // Packet descriptor
-            , uint8_t // GPIO number
-            , float   // gyro[0]
-            , float   // gyro[1]
-            , float   // gyro[2]
-            , float   // accel[0]
-            , float   // accel[1]
-            , float   // accel[2]
-            , float   // mag[0]
-            , float   // mag[1]
-            , float   // mag[2]
-            , float   // temperature
-            , uint64_t // timestamp (milliseconds since boot)
+    using MPU_9250__DataPacket = simple_packet::SimplePacket<
+              uint8_t  //  0) Packet descriptor
+            , uint8_t  //  1) GPIO number
+            , float    //  2) gyro[0]
+            , float    //  3) gyro[1]
+            , float    //  4) gyro[2]
+            , float    //  5) accel[0]
+            , float    //  6) accel[1]
+            , float    //  7) accel[2]
+            , float    //  8) mag[0]
+            , float    //  9) mag[1]
+            , float    // 10) mag[2]
+            , float    // 11) temperature
+            , uint64_t // 12) timestamp (milliseconds since boot)
     >;
 
     MPU_9250__DataPacket packet;
@@ -138,6 +140,72 @@ struct SimplePacket : View<Args...>
     const auto v4 = packet.get_value_at<4>();
     const auto v5 = packet.get_value_at<5>();
     const auto v6 = packet.get_value_at<6>();
+    @endcode
+
+    ## Advanced
+
+    @code{.cpp}
+    using Packet_sensor_data_ = simple_packet::SimplePacket<
+          uint64_t // 0) counter (for debug / tracking missing packets)
+        , uint64_t // 1) timestamp (milliseconds from boot)
+        , float[3] // 2) gyro_data [x,y,z]
+        , float[3] // 3) accel_data [x,y,z]
+        , float[3] // 4) mag_data [x,y,z]
+        , float    // 5) temperature C
+        , float[4] // 6) quaternion [w,x,y,z]
+    >;
+
+    struct Packet_sensor_data : Packet_sensor_data_
+    {
+        inline uint64_t getCounter() const {
+            return get_value_at<0>();
+        }
+        inline void setCounter(uint64_t value) {
+            set_value_at<0>(value);
+        }
+
+        inline uint64_t getTimestamp() const {
+            return get_value_at<1>();
+        }
+        inline void setTimestamp(uint64_t value) {
+            set_value_at<1>(value);
+        }
+
+        inline const float* getGyroData() const {
+            return reinterpret_cast<const float*>(bytes + get_bytes_offset_at<2>());
+        }
+        inline void setGyroData(const float (&data)[3]) {
+            set_value_at<2>(data);
+        }
+
+        inline const float* getAccelData() const {
+            return reinterpret_cast<const float*>(bytes + get_bytes_offset_at<3>());
+        }
+        inline void setAccelData(const float (&data)[3]) {
+            set_value_at<3>(data);
+        }
+
+        inline const float* getMagData() const {
+            return reinterpret_cast<const float*>(bytes + get_bytes_offset_at<4>());
+        }
+        inline void setMagData(const float (&data)[3]) {
+            set_value_at<4>(data);
+        }
+
+        inline float getTemperature() const {
+            return get_value_at<5>();
+        }
+        inline void setTemperature(float value) {
+            set_value_at<5>(value);
+        }
+
+        inline const float* getQuaternion() const {
+            return reinterpret_cast<const float*>(bytes + get_bytes_offset_at<6>());
+        }
+        inline void setQuaternion(const float (&data)[4]) {
+            set_value_at<6>(data);
+        }
+    };
     @endcode
 */
 
