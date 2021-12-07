@@ -169,7 +169,7 @@ public:
         return ( _type_idx == index_of<Enum>() );
     }
     
-    /// Returns status - is value of some specific type (not undefined)
+    /// Returns status - is value strictly the same as we pass
     /// TODO: add tests!!!
     template <typename Enum>
     constexpr bool is_value_of(const Enum value) const noexcept
