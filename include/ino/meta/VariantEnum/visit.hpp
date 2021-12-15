@@ -74,7 +74,7 @@ namespace variant_enum {
         return 0;
     }
     @endcode
- */
+*/
 
 template <typename ... Enums>
 class visitor
