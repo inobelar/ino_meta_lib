@@ -27,6 +27,7 @@ HEADERS += \
     $$PWD/ino/meta/traits/is_all_same.hpp \
     $$PWD/ino/meta/traits/is_unique.hpp \
     $$PWD/ino/meta/traits/type_at.hpp \
+    $$PWD/ino/meta/traits/unique.hpp \
     $$PWD/ino/meta/typelist/List.hpp \
     $$PWD/ino/meta/typelist/convert_tuple.hpp \
     $$PWD/ino/meta/typelist/first_types.hpp \

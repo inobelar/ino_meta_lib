@@ -28,7 +28,6 @@ struct disjunction<B1, Bn...>
     >::type
 {};
 
-
 } // namespace traits
 } // namespace meta
 } // namespace ino
