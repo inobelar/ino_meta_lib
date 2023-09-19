@@ -24,8 +24,13 @@
     # --------------------------------------------------------------------------
 ]]
 
-# block(), endblock(), return() added in version 3.25
+# block(), endblock(), return(PROPAGATE ...) added in version 3.25
 cmake_minimum_required(VERSION 3.25)
+
+# Store 'CMAKE_CURRENT_LIST_DIR' out-of-function, so it will contain path to
+# directory of **this** file, otherwise (if use 'CMAKE_CURRENT_LIST_DIR' inside
+# of function) it will contain path, related to file where function called).
+set(__INO_META_LIB_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 function(load_ino_meta_lib
          include_directories_out headers_out sources_out)
@@ -33,45 +38,45 @@ function(load_ino_meta_lib
     block(SCOPE_FOR VARIABLES)
 
         set(INO_META_LIB_INCLUDE_DIRECTORIES
-            ${CMAKE_CURRENT_LIST_DIR}/include/
+            ${__INO_META_LIB_DIR}/include/
         )
 
         set(INO_META_LIB_HEADERS
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/SimplePacket/SimplePacket.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/SimplePacket/traits/bytes_offset.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/SimplePacket/traits/count_bytes.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/VariantEnum/VariantEnum.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/VariantEnum/is_same.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/VariantEnum/traits/biggest_underlying_type.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/VariantEnum/traits/get_uint_type.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/VariantEnum/traits/is_all_enums.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/VariantEnum/visit.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/array_utils/make_filled.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/array_utils/reverse.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/array_utils/set_at.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/array_utils/sub_array.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/comparison/equal_trait.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/comparison/stl/access_array.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/comparison/stl/acess_initializer_list.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/comparison/stl/all.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/traits/conjunction.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/traits/contains.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/traits/disjunction.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/traits/function_traits.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/traits/index_of.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/traits/is_all_same.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/traits/is_unique.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/traits/type_at.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/traits/unique.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/typelist/List.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/typelist/convert_tuple.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/typelist/first_types.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/typelist/flatten.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/typelist/join.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/typelist/repeat.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/utils/accumulate.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/utils/index_sequence.hpp
-            ${CMAKE_CURRENT_LIST_DIR}/include/ino/meta/utils/index_sequence_reversed.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/SimplePacket/SimplePacket.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/SimplePacket/traits/bytes_offset.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/SimplePacket/traits/count_bytes.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/VariantEnum/VariantEnum.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/VariantEnum/is_same.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/VariantEnum/traits/biggest_underlying_type.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/VariantEnum/traits/get_uint_type.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/VariantEnum/traits/is_all_enums.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/VariantEnum/visit.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/array_utils/make_filled.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/array_utils/reverse.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/array_utils/set_at.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/array_utils/sub_array.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/comparison/equal_trait.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/comparison/stl/access_array.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/comparison/stl/acess_initializer_list.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/comparison/stl/all.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/traits/conjunction.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/traits/contains.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/traits/disjunction.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/traits/function_traits.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/traits/index_of.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/traits/is_all_same.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/traits/is_unique.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/traits/type_at.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/traits/unique.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/typelist/List.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/typelist/convert_tuple.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/typelist/first_types.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/typelist/flatten.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/typelist/join.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/typelist/repeat.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/utils/accumulate.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/utils/index_sequence.hpp
+            ${__INO_META_LIB_DIR}/include/ino/meta/utils/index_sequence_reversed.hpp
         )
 
         set(INO_META_LIB_SOURCES
